@@ -26,13 +26,18 @@ app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static("public"));
 
-let posts = [];
+// let posts = [];
 
-app.get("/", function(req, res){
-  res.render("home", {
-    startingContent: homeStartingContent,
-    posts: posts
+app.get("/", async function(req, res) {
+  try {
+    const posts = await Post.find({});
+    res.render("home", {
+      startingContent: homeStartingContent,
+      posts: posts
     });
+  } catch (err) {
+    console.error(err);
+  }
 });
 
 app.get("/about", function(req, res){
