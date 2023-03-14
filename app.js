@@ -64,9 +64,18 @@ app.post("/compose", function(req, res){
 
   console.log(post);
 
-  post.save();
-  
-  res.redirect("/");
+  async function savePost(post) {
+    try {
+      await post.save();
+      console.log('Post saved successfully');
+      res.redirect("/");
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  savePost(post);
+    
 
 });
 
